@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Fernando%20Vasques/ReposGiTHub/java_socket/Observer/src/negocio/Leiloeiro.java</file>
-            <file>file:/C:/Users/Fernando%20Vasques/ReposGiTHub/java_socket/Observer/src/socket/Servidor.java</file>
-            <file>file:/C:/Users/Fernando%20Vasques/ReposGiTHub/java_socket/Observer/src/observer/Loader.java</file>
+            <file>file:/C:/Users/Fernando%20Vasques/ReposGiTHub/java_socket/Servidor/src/negocio/Participante.java</file>
+            <file>file:/C:/Users/Fernando%20Vasques/ReposGiTHub/java_socket/Servidor/src/negocio/Leiloeiro.java</file>
+            <file>file:/C:/Users/Fernando%20Vasques/ReposGiTHub/java_socket/Servidor/src/socket/Servidor.java</file>
+            <file>file:/C:/Users/Fernando%20Vasques/ReposGiTHub/java_socket/Servidor/src/negocio/Interfaces/ILeiloeiro.java</file>
+            <file>file:/C:/Users/Fernando%20Vasques/ReposGiTHub/java_socket/Servidor/src/principal/Loader.java</file>
         </group>
     </open-files>
 </project-private>
