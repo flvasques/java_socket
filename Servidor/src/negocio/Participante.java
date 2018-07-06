@@ -1,13 +1,20 @@
  package negocio;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import negocio.Interfaces.*;
+import persistencia.Log;
 
 public class Participante implements IParticipante{
     private String nome;
     private double lance;
-    private ArrayList<String> output = new ArrayList<String>();
+    private ArrayList<String> output = new ArrayList<>();
     private Socket cliente;
     
     private Participante(){}
@@ -32,18 +39,25 @@ public class Participante implements IParticipante{
     }
     
     private void ciclo(){
-         /*while(this.online){
-                InputStream input = sc.getInputStream();
-                OutputStream output = sc.getOutputStream();
+        String str;
+        while(true){
+            InputStream input;
+            try {
+                input = this.cliente.getInputStream();
+                 OutputStream output = this.cliente.getOutputStream();
                 byte[] line = new byte[100];
                 input.read(line);
                 str = new String(line);
-                this.fila.setInput(str);
-                while(fila.hasOutput()){
-                    str = this.fila.getOutput();
+                this.lance = Double.parseDouble(str);
+                while(this.output.size() > 0){
+                    str = this.output.remove(0);
                     line = str.getBytes(Charset.forName("UTF-8"));
                     output.write(line);
                 }
-            }*/
+            } catch (IOException ex) {
+                Log.salvaLog("Falha na de execução de Participante: " + ex.toString());
+            }
+           
+        }
     }
 }
