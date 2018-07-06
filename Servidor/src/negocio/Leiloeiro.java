@@ -9,6 +9,9 @@ import socket.Servidor;
 public class Leiloeiro implements ILeiloeiro {
     private ArrayList<IParticipante> participantes;
     private Servidor servidor;
+    
+    private Leiloeiro(){}
+    
     public Leiloeiro(ArrayList<IParticipante> p, Servidor s){
         this.participantes = p;
         this.servidor = s;
