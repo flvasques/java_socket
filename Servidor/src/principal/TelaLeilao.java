@@ -2,6 +2,7 @@
 package principal;
 
 import java.util.ArrayList;
+import javax.swing.Timer;
 import negocio.Leiloeiro;
 import negocio.Lote;
 
@@ -10,11 +11,13 @@ public class TelaLeilao extends javax.swing.JFrame {
     private final ConfigTela config = new ConfigTela();
     private ArrayList<Lote> lotes;
     private Leiloeiro leiloeiro;
+    private Timer timer;
     
     public TelaLeilao() {
         initComponents();
     }
     public TelaLeilao(Leiloeiro l, ArrayList<Lote> ll){
+        this.timer = null;
         this.leiloeiro = l;
         this.lotes = ll;
         this.setTitle(config.getTiutlo());
