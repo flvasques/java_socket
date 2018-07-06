@@ -44,6 +44,7 @@ public class Servidor extends Thread {
             Log.salvaLog("Falha no Servidor: " + ex.toString());
         }
     }
+    @Override
     public void run(){
         this.online = true;
         this.rodar();

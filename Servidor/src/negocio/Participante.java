@@ -59,4 +59,8 @@ public class Participante extends Thread implements IParticipante{
            
         }
     }
+    @Override
+    public void run(){
+        this.ciclo();
+    }
 }

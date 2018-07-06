@@ -25,32 +25,66 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <Component id="list1" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="listaLotes" max="32767" attributes="0"/>
+                  <Component id="lblLotes" pref="210" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="750" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="listaparticipantes" alignment="0" min="-2" pref="251" max="-2" attributes="0"/>
+                  <Component id="lblLances" alignment="0" min="-2" pref="49" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblParticipantes" min="-2" pref="81" max="-2" attributes="0"/>
+                  <Component id="ListaLances" min="-2" pref="236" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="73" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblLotes" pref="41" max="32767" attributes="0"/>
+                  <Component id="lblParticipantes" max="32767" attributes="0"/>
+                  <Component id="lblLances" alignment="1" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="list1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="407" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="listaLotes" pref="348" max="32767" attributes="0"/>
+                      <Component id="listaparticipantes" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="ListaLances" min="-2" pref="430" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="java.awt.List" name="list1">
+    <Component class="java.awt.List" name="listaLotes">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblLotes">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel1"/>
+        <Property name="text" type="java.lang.String" value="Lotes"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.List" name="listaparticipantes">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblParticipantes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Participantes"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.List" name="ListaLances">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLances">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lances"/>
       </Properties>
     </Component>
   </SubComponents>

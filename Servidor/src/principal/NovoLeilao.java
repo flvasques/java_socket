@@ -52,6 +52,11 @@ public class NovoLeilao extends javax.swing.JFrame {
 
         btnAbrir.setText("Abrir");
         btnAbrir.setEnabled(false);
+        btnAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirActionPerformed(evt);
+            }
+        });
 
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +131,12 @@ public class NovoLeilao extends javax.swing.JFrame {
                 this.btnAbrir.setEnabled(true);
             }
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
+       this.leiloeiro.inicar();
+       new TelaLeilao(this.leiloeiro, this.lotes);
+       this.dispose();
+    }//GEN-LAST:event_btnAbrirActionPerformed
 
     /**
      * @param args the command line arguments

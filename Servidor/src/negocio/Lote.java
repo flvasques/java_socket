@@ -12,10 +12,12 @@ package negocio;
 public class Lote {
     private String item;
     private double valor;
+    private String status;
 
     public Lote(String item, double valor) {
         this.item = item;
         this.valor = valor;
+        this.status = "aguardando";
     }
 
     public String getItem() {
@@ -34,9 +36,18 @@ public class Lote {
         this.valor = valor;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+
     @Override
     public String toString() {
-        return this.item + "\t R$" + this.valor;
+        return this.item + "\t R$" + this.valor + " - " + this.status;
     }
     
     
