@@ -3,18 +3,20 @@ package negocio;
 
 import java.util.ArrayList;
 import negocio.Interfaces.*;
+import socket.Servidor;
 
 
 public class Leiloeiro implements ILeiloeiro {
     private ArrayList<IParticipante> participantes;
-    
-    public Leiloeiro(ArrayList<IParticipante> p){
+    private Servidor servidor;
+    public Leiloeiro(ArrayList<IParticipante> p, Servidor s){
         this.participantes = p;
+        this.servidor = s;
     }
 
     @Override
     public void inicar() {
-        
+        this.servidor.start();
     }
 
     @Override

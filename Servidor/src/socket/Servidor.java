@@ -4,17 +4,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import negocio.Interfaces.IParticipante;
 import negocio.Participante;
 import persistencia.Log;
 
-/**
- *
- * @author Fernando Vasques
- */
-public class Servidor {
+public class Servidor extends Thread {
     ServerSocket socket;
     private final int porta;
     private boolean online;
@@ -38,16 +32,21 @@ public class Servidor {
     
     public void rodar(){
         String str;
-        this.online = true;
         try {
             this.socket = new ServerSocket(this.porta);
             while(this.online){
                 Socket sc = this.socket.accept();
-                this.participantes.add(new Participante(sc));
+                IParticipante p = new Participante(sc);
+                ((Participante)p).start();
+                this.participantes.add(p);
             }
         } catch (IOException ex) {
-            Log.salvaLog("Falha em Iniciar o Servidor: " + ex.toString());
+            Log.salvaLog("Falha no Servidor: " + ex.toString());
         }
+    }
+    public void run(){
+        this.online = true;
+        this.rodar();
     }
     
 }

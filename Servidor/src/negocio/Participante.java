@@ -1,13 +1,18 @@
  package negocio;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import negocio.Interfaces.*;
+import org.omg.CORBA.portable.InputStream;
+import persistencia.Log;
 
-public class Participante implements IParticipante{
+public class Participante extends Thread implements IParticipante{
     private String nome;
     private double lance;
-    private ArrayList<String> output = new ArrayList<String>();
+    private ArrayList<String> fila = new ArrayList<String>();
     private Socket cliente;
     
     private Participante(){}
@@ -28,22 +33,27 @@ public class Participante implements IParticipante{
 
     @Override
     public void setOutPut(String msg) {
-        this.output.add(msg);
+        this.fila.add(msg);
     }
     
     private void ciclo(){
-         /*while(this.online){
-                InputStream input = sc.getInputStream();
-                OutputStream output = sc.getOutputStream();
-                byte[] line = new byte[100];
+        while(true){
+            try {
+                String str = null;
+                InputStream input = (InputStream) this.cliente.getInputStream();
+                OutputStream output = this.cliente.getOutputStream();
+                 byte[] line = new byte[100];
                 input.read(line);
                 str = new String(line);
-                this.fila.setInput(str);
-                while(fila.hasOutput()){
-                    str = this.fila.getOutput();
+                this.lance = Double.parseDouble(str);
+                while(fila.size() > 0){
+                    str = this.fila.remove(0);
                     line = str.getBytes(Charset.forName("UTF-8"));
                     output.write(line);
                 }
-            }*/
+            } catch (IOException ex) {
+                 Log.salvaLog("Falha no ciclo do sokect: " + ex.toString());
+            }          
+        }
     }
 }
