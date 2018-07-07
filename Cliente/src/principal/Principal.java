@@ -1,12 +1,15 @@
 
 package principal;
 
+import java.util.Timer;
 import negocio.Participante;
 
 
 public class Principal extends javax.swing.JFrame {
     Participante usuario;
-    ConfigTela config;
+     private ConfigTela config = new ConfigTela();
+    Job job;
+    Timer timer;
    
     public Principal() {
         initComponents();
@@ -22,8 +25,15 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.usuario.getSocket().start();
         this.listaHistorico.removeAll();
+        this.job = new Job(this);
+        this.timer = new Timer();
+        timer.schedule(this.job, 3000, 3000);
+        
     }
     
+    void lerLances(){
+        this.listaHistorico.add(this.usuario.getSocket().getInputMsg());
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

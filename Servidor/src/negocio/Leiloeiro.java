@@ -35,6 +35,19 @@ public class Leiloeiro implements ILeiloeiro {
     public void finalizar() {
         
     }
+
+    public ArrayList<IParticipante> getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(ArrayList<IParticipante> participantes) {
+        this.participantes = participantes;
+    }
     
+    public void noticicar(String msg){
+        for(int i = 0; i < this.participantes.size(); i++){
+            this.participantes.get(i).setOutPut(msg);
+        }
+    }
     
 }

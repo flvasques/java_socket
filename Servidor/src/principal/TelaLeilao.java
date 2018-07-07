@@ -2,7 +2,8 @@
 package principal;
 
 import java.util.ArrayList;
-import javax.swing.Timer;
+import java.util.Timer;
+
 import negocio.Leiloeiro;
 import negocio.Lote;
 
@@ -12,6 +13,8 @@ public class TelaLeilao extends javax.swing.JFrame {
     private ArrayList<Lote> lotes;
     private Leiloeiro leiloeiro;
     private Timer timer;
+    private boolean iniciado = false;
+    private int atual = 0;
     
     public TelaLeilao() {
         initComponents();
@@ -29,12 +32,54 @@ public class TelaLeilao extends javax.swing.JFrame {
         ListarLotes();
         this.listaparticipantes.removeAll();
         this.ListaLances.removeAll();
+        this.timer.schedule(new JobParticipantes(this), 3000);
     }
     
-    private void ListarLotes(){
+    void ListarLotes(){
         this.listaLotes.removeAll();
         for(int i = 0;  i < this.lotes.size(); i++){
             this.listaLotes.add(this.lotes.get(i).toString());
+        }
+    }
+    
+    void ListarParticipantes(){
+        this.listaparticipantes.removeAll();
+        for(int i = 0 ; i < this.leiloeiro.getParticipantes().size(); i++){
+            this.listaparticipantes.add(this.leiloeiro.getParticipantes().get(i).getNome());
+        }
+        if(this.leiloeiro.getParticipantes().size() >= 2){
+            this.ListaLances.add("Leilão iniciado");
+            this.lotes.get(0).setStatus("Em andamento");
+            ListarLotes();
+            this.timer.cancel();
+            this.leiloeiro.noticicar(this.lotes.get(0).toString());
+        }
+        this.timer.schedule(new JobLances(this), 3000);
+    }
+    private void andamento(){
+        for(int i = 0 ; i < this.leiloeiro.getParticipantes().size(); i++){
+            this.listaparticipantes.add(this.leiloeiro.getParticipantes().get(i).getNome()
+            + " - " + this.leiloeiro.getParticipantes().get(i).getLance()
+            );
+        }
+    }
+    void admLeilao(){
+        this.andamento();
+        double temp = 0;
+        double valoes[] = this.leiloeiro.lerLances();
+        for(int i = 0; i < valoes.length; i++){
+            for(int j = i;j < valoes.length;i++ ){
+                if(valoes[i] < valoes[j]){
+                    temp = i;
+                }
+            }
+        }
+        
+        if(this.lotes.get(this.atual).getValor() >= valoes[temp]){
+           this.lotes.get(this.atual).setStatus("Finalizado");
+           this.leiloeiro.noticicar(this.leiloeiro.getParticipantes().get(temp).getNome());
+           this.atual++;
+           this.leiloeiro.noticicar(this.lotes.get(0).toString());
         }
     }
     @SuppressWarnings("unchecked")
@@ -95,7 +140,7 @@ public class TelaLeilao extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
+    /**3
      * @param args the command line arguments
      */
     public static void main(String args[]) {

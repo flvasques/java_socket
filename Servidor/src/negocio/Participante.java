@@ -32,6 +32,10 @@ public class Participante extends Thread implements IParticipante{
         return this.lance;
     }
 
+    public void setLance(double lance) {
+        this.lance = lance;
+    }
+
     @Override
     public void setOutPut(String msg) {
         this.fila.add(msg);
