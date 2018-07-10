@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import negocio.Interfaces.IParticipante;
 import negocio.Participante;
 import persistencia.Log;
@@ -43,6 +45,7 @@ public class Servidor extends Thread {
             }
         } catch (IOException ex) {
             Log.salvaLog("Falha no Servidor: " + ex.toString());
+            JOptionPane.showMessageDialog(null, ex, "Leilão", ERROR_MESSAGE);
         }
     }
     @Override
@@ -50,5 +53,12 @@ public class Servidor extends Thread {
         this.online = true;
         this.rodar();
     }
-    
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
 }

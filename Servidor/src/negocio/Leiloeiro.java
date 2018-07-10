@@ -25,15 +25,29 @@ public class Leiloeiro implements ILeiloeiro {
     @Override
     public double[] lerLances() {
         double[] lances = new double[this.participantes.size()];
-        for(int i = 0; i < this.participantes.size();i++){
+        for(int i = 0; i < this.participantes.size(); i++){
             lances[i] = this.participantes.get(i).getLance();
+        }
+        double temp;
+        for(int i = 0; i < lances.length; i++){
+            for(int j = i + 1; j < lances.length; j++){
+                if(lances[i] < lances[j]){
+                    temp = lances[i];
+                    lances[i] = lances[j];
+                    lances[j] = temp;
+                }
+            }
         }
         return lances;
     }
 
     @Override
     public void finalizar() {
-        
+        while(!this.participantes.isEmpty()){
+            ((Participante)this.participantes.get(0)).setOnline(false);
+            this.participantes.remove(0);
+        }
+        this.servidor.setOnline(false);
     }
 
     @Override

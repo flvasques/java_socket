@@ -12,6 +12,7 @@ package negocio;
 public class Lote {
     private String item;
     private double valor;
+    private double valorVendido;
     private EnumStatusLote status;
 
     public Lote(String item, double valor) {
@@ -48,6 +49,14 @@ public class Lote {
     @Override
     public String toString() {
         return this.item + "-" + this.valor + "-" + this.status;
+    }
+
+    public double getValorVendido() {
+        return valorVendido;
+    }
+
+    public void setValorVendido(double valorVendido) {
+        this.valorVendido = valorVendido;
     }
     
     

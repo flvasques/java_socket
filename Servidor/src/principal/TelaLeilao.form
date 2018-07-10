@@ -31,10 +31,15 @@
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblParticipantes" min="-2" max="-2" attributes="0"/>
-                  <Component id="listaParticipantes" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="listaParticipantes" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Component id="lblParticipantes" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="329" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblLances" min="-2" max="-2" attributes="0"/>
+                  <Component id="listaLances" min="-2" pref="288" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="31" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
@@ -52,11 +57,15 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblLote" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblParticipantes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLances" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="listaParticipantes" pref="400" max="32767" attributes="0"/>
-                  <Component id="listaLotesVenda" max="32767" attributes="0"/>
+                  <Component id="listaLances" pref="400" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="listaParticipantes" pref="400" max="32767" attributes="0"/>
+                      <Component id="listaLotesVenda" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="104" max="32767" attributes="0"/>
           </Group>
@@ -84,6 +93,13 @@
     <Component class="javax.swing.JLabel" name="lblParticipantes">
       <Properties>
         <Property name="text" type="java.lang.String" value="Participantes"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.List" name="listaLances">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLances">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lances"/>
       </Properties>
     </Component>
   </SubComponents>

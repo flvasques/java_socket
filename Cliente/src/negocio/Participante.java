@@ -37,4 +37,7 @@ public class Participante {
         return str;
     }
     
+    public void setLance(String l){
+        this.socket.setOutputMsg(l);
+    }
 }

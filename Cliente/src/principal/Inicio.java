@@ -4,15 +4,14 @@ package principal;
 import negocio.Participante;
 
 public class Inicio extends javax.swing.JFrame {
-    
+
     private ConfigTela config = new ConfigTela();
     private Participante usuario;
-    
     
     public Inicio() {
         initComponents();
     }
-    
+
     public Inicio(Participante u){
         this.usuario = u;
         this.setTitle(config.getTiutlo());
@@ -29,23 +28,21 @@ public class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         lblNome = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txtIP = new javax.swing.JTextField();
-        btnEntrar = new javax.swing.JToggleButton();
+        lblIP = new javax.swing.JLabel();
+        textNome = new javax.swing.JTextField();
+        textIP = new javax.swing.JTextField();
+        cmdEntar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblNome.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblNome.setText("Seu nome:");
+        lblNome.setText("Seu Nome:");
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel1.setText("IP:");
+        lblIP.setText("IP:");
 
-        btnEntrar.setText("Entrar");
-        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+        cmdEntar.setText("Entar");
+        cmdEntar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntrarActionPerformed(evt);
+                cmdEntarActionPerformed(evt);
             }
         });
 
@@ -55,54 +52,56 @@ public class Inicio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNome)
+                    .addComponent(lblIP))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnEntrar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
-                            .addComponent(txtIP))
-                        .addGap(0, 420, Short.MAX_VALUE)))
+                    .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textIP, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(274, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cmdEntar)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(132, 132, 132)
+                .addGap(170, 170, 170)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(textNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 370, Short.MAX_VALUE)
-                .addComponent(btnEntrar)
+                    .addComponent(lblIP)
+                    .addComponent(textIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
+                .addComponent(cmdEntar)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+    private void cmdEntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEntarActionPerformed
       String nome, ip;
-      nome = this.txtNome.getText();
-      ip = this.txtIP.getText();
+      nome = this.textNome.getText();
+      ip = this.textIP.getText();
       this.usuario.setNome(nome);
       this.usuario.conecart(ip);
       Principal p = new Principal(this.usuario);
       p.stratTimer();
       this.dispose();
       this.setVisible(false);
-    }//GEN-LAST:event_btnEntrarActionPerformed
+    }//GEN-LAST:event_cmdEntarActionPerformed
 
     public static void main(String args[]) {
-
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -119,7 +118,9 @@ public class Inicio extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
 
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Inicio().setVisible(true);
@@ -128,10 +129,10 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnEntrar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton cmdEntar;
+    private javax.swing.JLabel lblIP;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JTextField txtIP;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField textIP;
+    private javax.swing.JTextField textNome;
     // End of variables declaration//GEN-END:variables
 }

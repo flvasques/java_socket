@@ -32,18 +32,26 @@ public class Cliente extends Thread {
             InputStream i = this.socket.getInputStream();
             OutputStream o = this.socket.getOutputStream();
             String str = "";
+            String temp;
             o.write(this.outputMsg.getBytes(Charset.forName("UTF-8")));
             this.outputMsg = "0";
             do {
                 byte[] line = new byte[100];
                 line = this.outputMsg.getBytes(Charset.forName("UTF-8"));
+                this.outputMsg = "0";
                 o.write(line);
                 i.read(line);
-                str = new String(line);
-                while(!str.equals("fim")){
+                temp = new String(line);
+                str += temp;
+                while(!temp.equals("*")){
                     i.read(line);
-                    str = new String(line);
-                    this.inputMsg.add(str);
+                    temp = new String(line);
+                    if(temp.endsWith("'")){
+                        this.inputMsg.add(str);
+                        str = "";
+                    }else{
+                        str += temp;
+                    }
                 }
             } while (!str.trim().equals("bye") && this.online);
             this.socket.close();

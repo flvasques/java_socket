@@ -3,6 +3,8 @@ package principal;
 
 import java.util.ArrayList;
 import java.util.Timer;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import negocio.EnumStatusLote;
 import negocio.Interfaces.ILeiloeiro;
 import negocio.Lote;
@@ -12,6 +14,7 @@ public class TelaLeilao extends javax.swing.JFrame {
     private ILeiloeiro usuario;
     private ArrayList<Lote> lotes;
     private Timer timer;
+    private int loteAtual;
     
     public TelaLeilao() {
         initComponents();
@@ -28,6 +31,7 @@ public class TelaLeilao extends javax.swing.JFrame {
         this.setVisible(true);
         listarLotes();
         listarParticipantes();
+        this.listaLances.removeAll();
     }
     
     void listarLotes(){
@@ -45,24 +49,68 @@ public class TelaLeilao extends javax.swing.JFrame {
         if(this.usuario.getParticipantes().isEmpty()){
             this.listaParticipantes.add("Sem Participantes");
             this.listaParticipantes.add("Aguradando Participantes");
-        }else if(this.usuario.getParticipantes().size() < 2){
+        }else if(this.usuario.getParticipantes().size() < 1){
             this.listaParticipantes.add("Aguradando Completar Corum");
-        }else if(this.usuario.getParticipantes().size()>= 2){
+        }else if(this.usuario.getParticipantes().size()>= 1){
             this.timer.cancel();
             this.lotes.get(0).setStatus(EnumStatusLote.Atual);
             this.listarLotes();
             this.usuario.noticicar("Leilão Iniciado");
             this.usuario.noticicar(this.lotes.get(0).toString());
+            this.listaLances.add("Leilão Iniciado");
+            this.listaLances.add(this.lotes.get(0).toString());
+            JobLances job = new JobLances(this);
+            this.timer.schedule(job, 5000, 5000);
+            this.loteAtual = 0;
         } 
     }
     
     void setTimer(JobParticipantes job){
         this.timer = new Timer();
-        this.timer.schedule(job, 3000, 30000);
+        this.timer.schedule(job, 60000, 60000);
     }
     
     void admLeilao(){
-        
+        double lances[] = this.usuario.lerLances();
+        for(int i = 0; i < this.usuario.getParticipantes().size(); i++){
+            String nome = this.usuario.getParticipantes().get(i).getNome();
+            String lance = this.usuario.getParticipantes().get(i).getLance() + "";
+            this.listaLances.add(nome + "\tR$" + lance);
+            this.usuario.noticicar(nome + "\tR$" + lance);
+        }
+        if(lances[0] >= this.lotes.get(this.loteAtual).getValor()){
+            this.lotes.get(this.loteAtual).setValorVendido(lances[0]);
+            this.lotes.get(this.loteAtual).setStatus(EnumStatusLote.Vendido);
+            this.listaLances.add("Item vendido por:" + lances[0]);
+            this.usuario.noticicar("Item vendido por:" + lances[0]);
+        }else{
+            this.lotes.get(this.loteAtual).setValorVendido(0);
+            this.lotes.get(this.loteAtual).setStatus(EnumStatusLote.Nao_Vendido);
+            this.listaLances.add("Item Regeitado");
+            this.usuario.noticicar("Item Regeitado");
+        }
+        this.listarLotes();
+        if(this.loteAtual < this.lotes.size()){
+            this.loteAtual++;
+            this.usuario.noticicar("Próximo Lote");
+            this.usuario.noticicar(this.lotes.get(this.loteAtual).toString());
+            this.listaLances.add("Próximo Lote");
+            this.listaLances.add(this.lotes.get(this.loteAtual).toString());
+        }else{
+            this.timer.cancel();
+            this.usuario.noticicar("Leilão Finalizado");
+            this.usuario.noticicar("Até a proxima");
+            this.usuario.noticicar("bye");
+            this.usuario.noticicar("Leilão Finalizado");
+            double total = 0;
+            for(int i  = 0; i < this.lotes.size(); i++){
+                total += this.lotes.get(i).getValorVendido();
+            }
+            JOptionPane.showMessageDialog(null, "Leilão Finalizado\n Valor arracadado de: R$" + total, "Leilão", ERROR_MESSAGE);
+            new NovoLeilao(this.usuario);
+            this.dispose();
+            this.setVisible(false);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -74,6 +122,8 @@ public class TelaLeilao extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         listaParticipantes = new java.awt.List();
         lblParticipantes = new javax.swing.JLabel();
+        listaLances = new java.awt.List();
+        lblLances = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +133,8 @@ public class TelaLeilao extends javax.swing.JFrame {
         lblTitulo.setText("Leilão");
 
         lblParticipantes.setText("Participantes");
+
+        lblLances.setText("Lances");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,9 +147,13 @@ public class TelaLeilao extends javax.swing.JFrame {
                     .addComponent(lblLote))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblParticipantes)
-                    .addComponent(listaParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(329, Short.MAX_VALUE))
+                    .addComponent(listaParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblParticipantes))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLances)
+                    .addComponent(listaLances, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
@@ -111,11 +167,14 @@ public class TelaLeilao extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLote)
-                    .addComponent(lblParticipantes))
+                    .addComponent(lblParticipantes)
+                    .addComponent(lblLances))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(listaParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                    .addComponent(listaLotesVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(listaLances, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(listaParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                        .addComponent(listaLotesVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
 
@@ -150,9 +209,11 @@ public class TelaLeilao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblLances;
     private javax.swing.JLabel lblLote;
     private javax.swing.JLabel lblParticipantes;
     private javax.swing.JLabel lblTitulo;
+    private java.awt.List listaLances;
     private java.awt.List listaLotesVenda;
     private java.awt.List listaParticipantes;
     // End of variables declaration//GEN-END:variables

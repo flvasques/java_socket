@@ -4,8 +4,8 @@ package principal;
 import java.util.Timer;
 import negocio.Participante;
 
-
 public class Principal extends javax.swing.JFrame {
+
     Participante usuario;
     private ConfigTela config = new ConfigTela();
     Job job;
@@ -34,65 +34,75 @@ public class Principal extends javax.swing.JFrame {
         timer.schedule(this.job, 1000, 1000);
     }
     void lerLances(){
-        System.out.println(this.usuario.getMgs());
+        if(this.usuario.getMgs() != null){
+            this.listaHistorico.add(this.usuario.getMgs());
+            System.out.println(this.usuario.getMgs());
+        }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblHistorico = new javax.swing.JLabel();
         listaHistorico = new java.awt.List();
         jLabel1 = new javax.swing.JLabel();
-        txtLance = new javax.swing.JTextField();
-        btnEnvar = new javax.swing.JToggleButton();
+        textLance = new javax.swing.JTextField();
+        cmdEnviar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblHistorico.setText("Historico");
+        jLabel1.setText("Andamento");
 
-        jLabel1.setText("Dar Lance");
+        cmdEnviar.setText("Enviar");
+        cmdEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdEnviarActionPerformed(evt);
+            }
+        });
 
-        btnEnvar.setText("Enviar");
+        jLabel2.setText("Dar Lance");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(listaHistorico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(txtLance, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEnvar)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(lblHistorico)))
-                        .addGap(0, 615, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(textLance, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmdEnviar))
+                        .addComponent(listaHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblHistorico)
-                .addGap(1, 1, 1)
-                .addComponent(listaHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(80, 80, 80)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtLance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEnvar)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listaHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(textLance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmdEnviar))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-  
+    private void cmdEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEnviarActionPerformed
+        this.usuario.setLance(this.textLance.getText());
+        this.textLance.setText("");
+    }//GEN-LAST:event_cmdEnviarActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -126,10 +136,10 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnEnvar;
+    private javax.swing.JButton cmdEnviar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblHistorico;
+    private javax.swing.JLabel jLabel2;
     private java.awt.List listaHistorico;
-    private javax.swing.JTextField txtLance;
+    private javax.swing.JTextField textLance;
     // End of variables declaration//GEN-END:variables
 }

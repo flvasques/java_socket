@@ -15,11 +15,13 @@ public class Participante extends Thread implements IParticipante{
     private double lance;
     private ArrayList<String> fila = new ArrayList<String>();
     private Socket cliente;
+    private boolean online = true;
     
     private Participante(){}
     
     public Participante(Socket sc){
         this.cliente = sc;
+        this.fila.add("Seja bem Vindo!");
     }
     
     @Override
@@ -34,7 +36,7 @@ public class Participante extends Thread implements IParticipante{
 
     public void setLance(double lance) {
         this.lance = lance;
-        this.fila.add("Seja bem Vindo!");
+       
     }
 
     @Override
@@ -44,7 +46,7 @@ public class Participante extends Thread implements IParticipante{
     
     private void ciclo(){
         String str;
-        while(true){
+        while(this.online){
             InputStream input;
             try {
                 input = this.cliente.getInputStream();
@@ -55,13 +57,14 @@ public class Participante extends Thread implements IParticipante{
                 tryParseDouble(str);
                 while(this.fila.size() > 0){
                     str = this.fila.remove(0);
+                    str += "'";
                     line = str.getBytes(Charset.forName("UTF-8"));
                     output.write(line);
                 }
-                line = "fim".getBytes(Charset.forName("UTF-8"));
+                line = "*".getBytes(Charset.forName("UTF-8"));
                 output.write(line);
             } catch (IOException ex) {
-                Log.salvaLog("Falha na de execução de Participante: " + ex.toString());
+                Log.salvaLog("Falha na de execução de Participante: " + ex.toString());                
             }
            
         }
@@ -78,4 +81,9 @@ public class Participante extends Thread implements IParticipante{
         }
 
     }
+
+    public void setOnline(boolean b) {
+        this.online = b;
+    }
+    
 }
