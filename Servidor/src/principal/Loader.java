@@ -13,6 +13,8 @@ public class Loader {
 
         Servidor serverSocket = new Servidor(p);
         ILeiloeiro ll = new Leiloeiro(p, serverSocket);
+        
+        new NovoLeilao(ll);
     
     }
     

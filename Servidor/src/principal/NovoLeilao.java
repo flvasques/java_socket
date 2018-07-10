@@ -6,12 +6,13 @@
 package principal;
 
 import java.util.ArrayList;
+import negocio.Interfaces.ILeiloeiro;
 import negocio.Leiloeiro;
 import negocio.Lote;
 
 public class NovoLeilao extends javax.swing.JFrame {
 
-    private Leiloeiro leiloeiro;
+    private ILeiloeiro leiloeiro;
     private final ConfigTela config = new ConfigTela();
     private ArrayList<Lote> lotes = new ArrayList<>();
     
@@ -19,11 +20,12 @@ public class NovoLeilao extends javax.swing.JFrame {
         initComponents();
     }
 
-    public NovoLeilao(Leiloeiro l) {
+    public NovoLeilao(ILeiloeiro l) {
         this.leiloeiro = l;
         this.setTitle(config.getTiutlo());
         this.setSize(config.getSizeY(),config.getSizeX());
         this.setResizable(config.isResizeble());
+        this.setLocationRelativeTo(null);
         initComponents();
         this.setVisible(true);
         this.listaLotes.removeAll();
@@ -73,34 +75,37 @@ public class NovoLeilao extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblItem)
-                    .addComponent(lblValor))
-                .addGap(18, 18, 18)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtItem, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblItem)
+                                    .addComponent(lblValor))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtItem, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(311, 311, 311)
+                                .addComponent(lbltitulo)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(listaLotes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 628, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnAdicionar)
                                     .addComponent(btnAbrir))))
                         .addGap(50, 50, 50))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(311, 311, 311)
-                .addComponent(lbltitulo)
-                .addContainerGap(356, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addComponent(lbltitulo)
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -110,7 +115,7 @@ public class NovoLeilao extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblValor))
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdicionar)
                 .addGap(27, 27, 27)
                 .addComponent(listaLotes, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,8 +139,11 @@ public class NovoLeilao extends javax.swing.JFrame {
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
        this.leiloeiro.inicar();
-       new TelaLeilao(this.leiloeiro, this.lotes);
+       TelaLeilao novaTela = new TelaLeilao(this.leiloeiro, this.lotes);
+       JobParticipantes job = new JobParticipantes(novaTela);
+       novaTela.setTimer(job);
        this.dispose();
+       this.setVisible(false);
     }//GEN-LAST:event_btnAbrirActionPerformed
 
     /**

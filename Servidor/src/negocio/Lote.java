@@ -12,12 +12,12 @@ package negocio;
 public class Lote {
     private String item;
     private double valor;
-    private String status;
+    private EnumStatusLote status;
 
     public Lote(String item, double valor) {
         this.item = item;
         this.valor = valor;
-        this.status = "aguardando";
+        this.status = EnumStatusLote.Aguardando;
     }
 
     public String getItem() {
@@ -37,17 +37,17 @@ public class Lote {
     }
 
     public String getStatus() {
-        return status;
+        return status.toString();
     }
 
-    public void setStatus(String status) {
+    public void setStatus(EnumStatusLote status) {
         this.status = status;
     }
     
 
     @Override
     public String toString() {
-        return this.item + "\t R$" + this.valor + " - " + this.status;
+        return this.item + "-" + this.valor + "-" + this.status;
     }
     
     

@@ -36,6 +36,7 @@ public class Leiloeiro implements ILeiloeiro {
         
     }
 
+    @Override
     public ArrayList<IParticipante> getParticipantes() {
         return participantes;
     }
@@ -44,6 +45,7 @@ public class Leiloeiro implements ILeiloeiro {
         this.participantes = participantes;
     }
     
+    @Override
     public void noticicar(String msg){
         for(int i = 0; i < this.participantes.size(); i++){
             this.participantes.get(i).setOutPut(msg);

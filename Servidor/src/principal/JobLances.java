@@ -13,7 +13,7 @@ public class JobLances  extends TimerTask{
     
     @Override
     public void run() {
-       this.tela.admLeilao();
+        this.tela.admLeilao();
     }
     
 }

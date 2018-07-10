@@ -21,7 +21,7 @@ public class JobParticipantes extends TimerTask{
     
     @Override
     public void run() {
-        this.tela.ListarParticipantes();
+    this.tela.listarParticipantes();
     }
     
 }

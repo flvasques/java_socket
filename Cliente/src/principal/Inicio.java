@@ -15,6 +15,7 @@ public class Inicio extends javax.swing.JFrame {
         this.setTitle(config.getTiutlo());
         this.setSize(config.getSizeY(),config.getSizeX());
         this.setResizable(config.isResizeble());
+         this.setLocationRelativeTo(null);
         initComponents();
         this.setVisible(true);
         initComponents();
@@ -34,6 +35,8 @@ public class Inicio extends javax.swing.JFrame {
 
         jLabel1.setText("Seu Nome:");
 
+        txtNome.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         btnEntrar.setText("Entrar");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -42,6 +45,8 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         jLabel2.setText("IP Servidor");
+
+        txtIp.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,10 +69,10 @@ public class Inicio extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnEntrar)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(360, 360, 360)
                 .addComponent(jLabel2)
-                .addGap(367, 367, 367))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,9 +95,13 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         this.usuario.setNome(this.txtNome.getText());
+        System.out.println("Meu nome Nome:"+this.txtNome.getText());
         this.usuario.getSocket().setIp(this.txtIp.getText());
-        new Principal(this.usuario);
+        this.usuario.getSocket().setOutputMsg(this.usuario.getNome());
+        Principal tela = new Principal(this.usuario);
+        tela.stratTimer();
         this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**

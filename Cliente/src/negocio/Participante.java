@@ -22,5 +22,12 @@ public class Participante {
     public Cliente getSocket() {
         return socket;
     }
+    public String getMgs(){
+        String str = null;
+        if(!this.socket.getInputMsg().isEmpty()){
+            str = this.socket.getInputMsg().remove(0);
+        }
+        return str;
+    }
     
 }

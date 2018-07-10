@@ -22,6 +22,7 @@ public class Servidor extends Thread {
         this.porta = 10000;
         this.online = false;
         this.participantes = p;
+        
     }
     
     public Servidor(int porta, ArrayList<IParticipante> p){

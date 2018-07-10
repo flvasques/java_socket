@@ -3,152 +3,127 @@ package principal;
 
 import java.util.ArrayList;
 import java.util.Timer;
-
-import negocio.Leiloeiro;
+import negocio.EnumStatusLote;
+import negocio.Interfaces.ILeiloeiro;
 import negocio.Lote;
 
 public class TelaLeilao extends javax.swing.JFrame {
-    
     private final ConfigTela config = new ConfigTela();
+    private ILeiloeiro usuario;
     private ArrayList<Lote> lotes;
-    private Leiloeiro leiloeiro;
     private Timer timer;
-    private boolean iniciado = false;
-    private int atual = 0;
     
     public TelaLeilao() {
         initComponents();
     }
-    public TelaLeilao(Leiloeiro l, ArrayList<Lote> ll){
-        this.timer = null;
-        this.leiloeiro = l;
+
+    public TelaLeilao(ILeiloeiro l, ArrayList<Lote> ll) {
+        this.usuario = l;
         this.lotes = ll;
         this.setTitle(config.getTiutlo());
         this.setSize(config.getSizeY(),config.getSizeX());
         this.setResizable(config.isResizeble());
+        this.setLocationRelativeTo(null);
         initComponents();
         this.setVisible(true);
-        initComponents();
-        ListarLotes();
-        this.listaparticipantes.removeAll();
-        this.ListaLances.removeAll();
-        this.timer.schedule(new JobParticipantes(this), 3000);
+        listarLotes();
+        listarParticipantes();
     }
     
-    void ListarLotes(){
-        this.listaLotes.removeAll();
-        for(int i = 0;  i < this.lotes.size(); i++){
-            this.listaLotes.add(this.lotes.get(i).toString());
+    void listarLotes(){
+        this.listaLotesVenda.removeAll();
+        for(int i = 0; i < this.lotes.size(); i++){
+            this.listaLotesVenda.add(this.lotes.get(i).toString());
         }
     }
     
-    void ListarParticipantes(){
-        this.listaparticipantes.removeAll();
-        for(int i = 0 ; i < this.leiloeiro.getParticipantes().size(); i++){
-            this.listaparticipantes.add(this.leiloeiro.getParticipantes().get(i).getNome());
+    void listarParticipantes(){
+        this.listaParticipantes.removeAll();
+        for(int i = 0; i < this.usuario.getParticipantes().size(); i++){
+            this.listaParticipantes.add(this.usuario.getParticipantes().get(i).getNome());
         }
-        if(this.leiloeiro.getParticipantes().size() >= 2){
-            this.ListaLances.add("Leilão iniciado");
-            this.lotes.get(0).setStatus("Em andamento");
-            ListarLotes();
+        if(this.usuario.getParticipantes().isEmpty()){
+            this.listaParticipantes.add("Sem Participantes");
+            this.listaParticipantes.add("Aguradando Participantes");
+        }else if(this.usuario.getParticipantes().size() < 2){
+            this.listaParticipantes.add("Aguradando Completar Corum");
+        }else if(this.usuario.getParticipantes().size()>= 2){
             this.timer.cancel();
-            this.leiloeiro.noticicar(this.lotes.get(0).toString());
-        }
-        this.timer.schedule(new JobLances(this), 3000);
+            this.lotes.get(0).setStatus(EnumStatusLote.Atual);
+            this.listarLotes();
+            this.usuario.noticicar("Leilão Iniciado");
+            this.usuario.noticicar(this.lotes.get(0).toString());
+        } 
     }
-    private void andamento(){
-        for(int i = 0 ; i < this.leiloeiro.getParticipantes().size(); i++){
-            this.listaparticipantes.add(this.leiloeiro.getParticipantes().get(i).getNome()
-            + " - " + this.leiloeiro.getParticipantes().get(i).getLance()
-            );
-        }
+    
+    void setTimer(JobParticipantes job){
+        this.timer = new Timer();
+        this.timer.schedule(job, 3000, 30000);
     }
+    
     void admLeilao(){
-        this.andamento();
-        double temp = 0;
-        double valoes[] = this.leiloeiro.lerLances();
-        for(int i = 0; i < valoes.length; i++){
-            for(int j = i;j < valoes.length;i++ ){
-                if(valoes[i] < valoes[j]){
-                    temp = i;
-                }
-            }
-        }
         
-        if(this.lotes.get(this.atual).getValor() >= valoes[temp]){
-           this.lotes.get(this.atual).setStatus("Finalizado");
-           this.leiloeiro.noticicar(this.leiloeiro.getParticipantes().get(temp).getNome());
-           this.atual++;
-           this.leiloeiro.noticicar(this.lotes.get(0).toString());
-        }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        listaLotes = new java.awt.List();
-        lblLotes = new javax.swing.JLabel();
-        listaparticipantes = new java.awt.List();
+        lblLote = new javax.swing.JLabel();
+        listaLotesVenda = new java.awt.List();
+        lblTitulo = new javax.swing.JLabel();
+        listaParticipantes = new java.awt.List();
         lblParticipantes = new javax.swing.JLabel();
-        ListaLances = new java.awt.List();
-        lblLances = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblLotes.setText("Lotes");
+        lblLote.setText("Lotes");
+
+        lblTitulo.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lblTitulo.setText("Leilão");
 
         lblParticipantes.setText("Participantes");
-
-        lblLances.setText("Lances");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(listaLotes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblLotes, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(listaparticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLances, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(listaLotesVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLote))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ListaLances, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(73, Short.MAX_VALUE))
+                    .addComponent(lblParticipantes)
+                    .addComponent(listaParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(329, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitulo)
+                .addGap(349, 349, 349))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblLotes, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                    .addComponent(lblParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblLances, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(lblTitulo)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLote)
+                    .addComponent(lblParticipantes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(listaLotes, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-                        .addComponent(listaparticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(ListaLances, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(listaParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                    .addComponent(listaLotesVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**3
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -167,20 +142,18 @@ public class TelaLeilao extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaLeilao().setVisible(true);
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.List ListaLances;
-    private javax.swing.JLabel lblLances;
-    private javax.swing.JLabel lblLotes;
+    private javax.swing.JLabel lblLote;
     private javax.swing.JLabel lblParticipantes;
-    private java.awt.List listaLotes;
-    private java.awt.List listaparticipantes;
+    private javax.swing.JLabel lblTitulo;
+    private java.awt.List listaLotesVenda;
+    private java.awt.List listaParticipantes;
     // End of variables declaration//GEN-END:variables
 }

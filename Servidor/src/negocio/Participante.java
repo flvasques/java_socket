@@ -11,7 +11,7 @@ import negocio.Interfaces.*;
 import persistencia.Log;
 
 public class Participante extends Thread implements IParticipante{
-    private String nome;
+    public String nome;
     private double lance;
     private ArrayList<String> fila = new ArrayList<String>();
     private Socket cliente;
@@ -34,6 +34,7 @@ public class Participante extends Thread implements IParticipante{
 
     public void setLance(double lance) {
         this.lance = lance;
+        this.fila.add("Seja bem Vindo!");
     }
 
     @Override
@@ -47,16 +48,18 @@ public class Participante extends Thread implements IParticipante{
             InputStream input;
             try {
                 input = this.cliente.getInputStream();
-                 OutputStream output = this.cliente.getOutputStream();
+                OutputStream output = this.cliente.getOutputStream();
                 byte[] line = new byte[100];
                 input.read(line);
                 str = new String(line);
-                this.lance = Double.parseDouble(str);
+                tryParseDouble(str);
                 while(this.fila.size() > 0){
                     str = this.fila.remove(0);
                     line = str.getBytes(Charset.forName("UTF-8"));
                     output.write(line);
                 }
+                line = "fim".getBytes(Charset.forName("UTF-8"));
+                output.write(line);
             } catch (IOException ex) {
                 Log.salvaLog("Falha na de execução de Participante: " + ex.toString());
             }
@@ -66,5 +69,13 @@ public class Participante extends Thread implements IParticipante{
     @Override
     public void run(){
         this.ciclo();
+    }
+    private void tryParseDouble(String str){
+        try {
+            this.lance = Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            this.nome = str;
+        }
+
     }
 }

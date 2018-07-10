@@ -7,7 +7,7 @@ import negocio.Participante;
 
 public class Principal extends javax.swing.JFrame {
     Participante usuario;
-     private ConfigTela config = new ConfigTela();
+    private ConfigTela config = new ConfigTela();
     Job job;
     Timer timer;
    
@@ -21,18 +21,20 @@ public class Principal extends javax.swing.JFrame {
         this.setSize(config.getSizeY(),config.getSizeX());
         this.setResizable(config.isResizeble());
         initComponents();
+         this.setLocationRelativeTo(null);
         this.setVisible(true);
         initComponents();
         this.usuario.getSocket().start();
         this.listaHistorico.removeAll();
-        this.job = new Job(this);
-        this.timer = new Timer();
-        timer.schedule(this.job, 3000, 3000);
-        
     }
     
+    void stratTimer(){
+         this.job = new Job(this);
+        this.timer = new Timer();
+        timer.schedule(this.job, 1000, 1000);
+    }
     void lerLances(){
-        this.listaHistorico.add(this.usuario.getSocket().getInputMsg());
+        System.out.println(this.usuario.getMgs());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
