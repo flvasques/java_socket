@@ -58,6 +58,9 @@ public class Cliente extends Thread {
     @Override
     public void run(){
         this.online = true;
+        System.out.println("socket.Cliente.run()");
+        System.out.println("Nome:" + this.outputMsg);
+        System.out.println("IP:" + this.ip);
         this.rodar();
     }
 

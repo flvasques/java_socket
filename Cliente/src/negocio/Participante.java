@@ -22,6 +22,13 @@ public class Participante {
     public Cliente getSocket() {
         return socket;
     }
+    
+    public void conecart(String ip){
+        this.socket.setOutputMsg(this.Nome);
+        this.socket.setIp(ip);
+        this.socket.start();
+    }
+    
     public String getMgs(){
         String str = null;
         if(!this.socket.getInputMsg().isEmpty()){

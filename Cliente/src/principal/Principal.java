@@ -24,7 +24,7 @@ public class Principal extends javax.swing.JFrame {
          this.setLocationRelativeTo(null);
         this.setVisible(true);
         initComponents();
-        this.usuario.getSocket().start();
+        //this.usuario.getSocket().start();
         this.listaHistorico.removeAll();
     }
     
