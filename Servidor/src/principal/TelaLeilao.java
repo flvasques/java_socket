@@ -49,9 +49,9 @@ public class TelaLeilao extends javax.swing.JFrame {
         if(this.usuario.getParticipantes().isEmpty()){
             this.listaParticipantes.add("Sem Participantes");
             this.listaParticipantes.add("Aguradando Participantes");
-        }else if(this.usuario.getParticipantes().size() < 1){
+        }else if(this.usuario.getParticipantes().size() < 2){
             this.listaParticipantes.add("Aguradando Completar Corum");
-        }else if(this.usuario.getParticipantes().size()>= 1){
+        }else if(this.usuario.getParticipantes().size()>= 2){
             this.timer.cancel();
             this.lotes.get(0).setStatus(EnumStatusLote.Atual);
             this.listarLotes();

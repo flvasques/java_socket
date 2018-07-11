@@ -66,7 +66,6 @@ public class Participante extends Thread implements IParticipante{
             } catch (IOException ex) {
                 Log.salvaLog("Falha na de execução de Participante: " + ex.toString());                
             }
-           
         }
     }
     @Override

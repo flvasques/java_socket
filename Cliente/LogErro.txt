@@ -1,2 +1,0 @@
-
-10/07/2018 05:36 => Falha na execução do socket: java.net.ConnectException: Connection refused: connect.

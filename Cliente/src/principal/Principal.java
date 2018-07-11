@@ -34,9 +34,10 @@ public class Principal extends javax.swing.JFrame {
         timer.schedule(this.job, 1000, 1000);
     }
     void lerLances(){
-        if(this.usuario.getMgs() != null){
-            this.listaHistorico.add(this.usuario.getMgs());
-            System.out.println(this.usuario.getMgs());
+        String msg = this.usuario.getMgs();
+        if(msg != null){
+            this.listaHistorico.add(msg);
+            System.out.println(msg);
         }
     }
     @SuppressWarnings("unchecked")
@@ -128,10 +129,8 @@ public class Principal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Principal().setVisible(true);
         });
     }
 
